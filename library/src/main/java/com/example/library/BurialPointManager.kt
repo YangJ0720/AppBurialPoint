@@ -47,7 +47,8 @@ object BurialPointManager {
             override fun onActivityResumed(activity: Activity?) {
                 logcat?.holderActivityOnResumed(activity)
                 if (!mArray.contains(activity)) {
-                    val view = activity?.findViewById<View>(android.R.id.content) ?: return
+                    // val view = activity?.findViewById<View>(android.R.id.content) ?: return
+                    val view = activity?.window?.decorView ?: return
                     onHoldViewClick(view)
                     mArray.add(activity)
                 }

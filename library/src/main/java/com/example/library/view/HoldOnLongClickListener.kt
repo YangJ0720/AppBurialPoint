@@ -17,6 +17,7 @@ class HoldOnLongClickListener : View.OnLongClickListener {
     }
 
     override fun onLongClick(v: View): Boolean {
+        println("onLongClick: ${v.id}")
         BurialPointManager.getLogcat()?.holderOnLongClick(v)
         return mListener.onLongClick(v)
     }

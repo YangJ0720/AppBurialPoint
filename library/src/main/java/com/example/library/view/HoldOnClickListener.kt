@@ -17,6 +17,7 @@ class HoldOnClickListener : View.OnClickListener {
     }
 
     override fun onClick(v: View) {
+        println("onClick: ${v.id}")
         BurialPointManager.getLogcat()?.holderOnClick(v)
         mListener.onClick(v)
     }

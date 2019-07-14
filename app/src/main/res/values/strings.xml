@@ -3,4 +3,7 @@
 
     <string name="click">点击事件</string>
     <string name="long_click">长按事件</string>
+
+    <string name="menu_add">添加</string>
+    <string name="menu_del">删除</string>
 </resources>
