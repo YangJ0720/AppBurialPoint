@@ -16,7 +16,6 @@ object HoldViewUtils {
     private const val NAME_M_ON_LONG_CLICK_LISTENER = "mOnLongClickListener"
 
     fun hold(view: View) {
-        println("view = $view")
         // 获取View的class对象
         val cls = View::class.java
         // 反射获取View的getListenerInfo方法

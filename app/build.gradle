@@ -35,6 +35,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // Library
     implementation project(path: ':library')
+//    // 将RecyclerView的依赖从这个三方库中排除掉
+//    implementation "xxx.xxx:xxx:1.0.0", {
+//        exclude group: 'com.android.support', module: 'recyclerview-v7'
+//    }
 }
 repositories {
     mavenCentral()

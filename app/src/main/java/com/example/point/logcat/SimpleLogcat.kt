@@ -3,6 +3,7 @@ package com.example.point.logcat
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import com.example.library.log.Logcat
 
@@ -23,6 +24,10 @@ class SimpleLogcat : Logcat {
 
     override fun holderOnLongClick(v: View) {
         Log.i(TAG, "holderOnLongClick: ${v.id}")
+    }
+
+    override fun holderOnMenuItemSelected(featureId: Int, item: MenuItem?) {
+        Log.i(TAG, "holderOnMenuItemSelected: ${item?.title}")
     }
 
     override fun holderActivityOnCreated(activity: Activity?) {

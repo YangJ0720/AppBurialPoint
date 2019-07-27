@@ -3,9 +3,9 @@ package com.example.library
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.collection.ArraySet
+import com.example.library.callback.WindowCallback
 import com.example.library.config.BurialPointConfig
 import com.example.library.log.Logcat
 
@@ -38,6 +38,9 @@ object BurialPointManager {
 
             override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
                 logcat?.holderActivityOnCreated(activity)
+                val window = activity?.window ?: return
+                val callback = window.callback
+                window.callback = WindowCallback(callback, mConfig.getLogcat())
             }
 
             override fun onActivityStarted(activity: Activity?) {
@@ -66,6 +69,12 @@ object BurialPointManager {
                 logcat?.holderActivityOnDestroyed(activity)
                 if (mArray.contains(activity)) {
                     mArray.remove(activity)
+                }
+                //
+                val window = activity?.window ?:return
+                val callback = window.callback
+                if (callback is WindowCallback) {
+                    callback.setLogcat(null)
                 }
             }
 

@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.library.BurialPointManager
 import com.example.library.config.BurialPointConfig
 import com.example.library.log.DefaultLogcat
+import com.example.point.logcat.SimpleLogcat
 
 /**
  * 功能描述
@@ -15,8 +16,8 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         // 初始化日志记录器
-        // val logcat = SimpleLogcat()
-        val logcat = DefaultLogcat(this)
+         val logcat = SimpleLogcat()
+//        val logcat = DefaultLogcat(this)
         val config = BurialPointConfig.Builder(this).setLogcat(logcat).build()
         BurialPointManager.initialize(config)
         BurialPointManager.onHoldActivity(this)

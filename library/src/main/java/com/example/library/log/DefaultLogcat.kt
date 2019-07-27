@@ -3,6 +3,7 @@ package com.example.library.log
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import java.io.ByteArrayInputStream
 import java.io.File
@@ -40,6 +41,11 @@ open class DefaultLogcat : Logcat {
 
     override fun holderOnLongClick(v: View) {
         val text = getTemplateText("OnLongClick: ${v.id}")
+        write(text)
+    }
+
+    override fun holderOnMenuItemSelected(featureId: Int, item: MenuItem?) {
+        val text = getTemplateText("OnMenuItemSelected: ${item?.itemId}")
         write(text)
     }
 
