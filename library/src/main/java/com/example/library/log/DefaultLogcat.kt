@@ -3,6 +3,7 @@ package com.example.library.log
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import java.io.ByteArrayInputStream
@@ -27,7 +28,7 @@ open class DefaultLogcat : Logcat {
     private var mExternalCachePath: String
 
     constructor(context: Context) {
-        val sb = StringBuilder(context.externalCacheDir.absolutePath)
+        val sb = StringBuilder(context.cacheDir.absolutePath)
         sb.append(File.separator)
         sb.append(getFileName())
         sb.append(FILE_FORMAT_TXT)

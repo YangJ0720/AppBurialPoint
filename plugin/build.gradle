@@ -1,0 +1,23 @@
+apply plugin: 'groovy'
+
+apply plugin: 'maven'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile gradleApi() // Gradle SDK
+    compile localGroovy() // Groovy SDK
+    compile 'com.android.tools.build:gradle:3.4.2' // 你的Gradle版本
+}
+
+group = 'com.example.plugin'
+version = '1.0.0'
+
+// 把插件打包到Maven仓库，我们这里是打包到本地仓库
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: uri("../repository")) // 生成插件的本地仓库路径
+    }
+}

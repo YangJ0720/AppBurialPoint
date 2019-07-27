@@ -1,0 +1,95 @@
+1.创建一个用于开发Gradle插件的Module，可以随意选择任何类型的Module
+
+2.保留Module中的build.gradle文件和src文件夹，其他文件都删掉
+
+3.在build.gradle文件中添加如下内容:
+apply plugin: 'groovy'
+
+apply plugin: 'maven'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile gradleApi() // Gradle SDK
+    compile localGroovy() // Groovy SDK
+    compile 'com.android.tools.build:gradle:3.4.2' // 你的Gradle版本
+}
+
+group = 'com.simple.plugin'
+version = '1.0.0'
+
+// 把插件打包到Maven仓库，我们这里是打包到本地仓库
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: uri("../repository")) // 生成插件的本地仓库路径
+    }
+}
+
+4.在Module下的main目录创建一个groovy目录
+
+5.在groovy目录下创建一个包，我这里创建的是com.simple.plugin
+
+6.在刚才创建的包名下创建一个后缀名为.groovy的文件，我这里创建的是MyPlugin.groovy，并将如下内容填充到该文件:
+package com.simple.plugin
+
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+
+/**
+ * @author YangJ
+ */
+class MyPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+        println "---------------------------------"
+        println "Hello Gradle Plugin"
+        println "---------------------------------"
+    }
+
+}
+
+7.这样我们就相当于创建好自己的插件了，接下来我们需要告诉Gradle哪一个是我们自定义的插件类。
+所以我们需要在main目录下创建resources文件夹，然后在resources目录下创建META-INF文件夹，
+接着在META-INF目录下创建gradle-plugins目录，效果是这样的:src/main/resources/META-INF/gradle-plugins
+
+8.上面的目录都创建好了以后，我们需要创建一个后缀名为.properties的文件，这个文件命名要稍微注意下，
+因为后续我们需要使用到它。我这里创建的是com.simple.plugin.properties，并将如下内容填充到该文件:
+implementation-class=com.simple.plugin.MyPlugin
+
+这样就相当于告诉Gradle我们自定义的插件实现类是com.simple.plugin.MyPlugin
+
+9.上面的配置都完成之后，我们就可以开始打包了。在Android Studio选择Gradle工具，找到你创建的Module名称，
+下面有一个upload，继续点开会看到uploadArchives，双击它执行，你会看到在根目录中刷新出一个叫repository的文件夹，
+也就是步骤3中配置的插件输出文件夹名称。
+
+10.插件打包完成之后我们就可以在项目中使用了，首先需要在工程根目录的build.gradle文件中添加Maven本地依赖，如下所示:
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        // 步骤一
+        maven {
+            url uri('./repository')
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.2'
+        // 步骤二
+        classpath 'com.simple.plugin:plugin:1.0.0'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+需要注意的是：classpath 'com.simple.plugin:你的module名称:1.0.0'
+
+11.在主工程的build.gradle文件添加本地依赖，如下所示：
+apply plugin: 'com.simple.plugin'
+
+12.这是最后一步，执行Build -> Make Project如果看到如下内容说明执行成功啦！
+---------------------------------
+Hello Gradle Plugin
+---------------------------------
