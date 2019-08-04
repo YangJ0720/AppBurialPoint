@@ -4,6 +4,7 @@
 
 项目特点
 * 使用Javassist操作字节码文件的方式替换基于反射实现的数据埋点功能
+* 可以修改第三方SDK中的代码逻辑（这个有待研究）
 
 ## APK下载
 [Download](https://github.com/YangJ0720/AppBurialPoint/blob/master/apk/app-debug.apk)
@@ -89,7 +90,12 @@ private void hasInterfaces(CtClass ctClass, String fileName) {
 但是生成的字节码文件中存在埋点代码，如下：
 ![image](https://github.com/YangJ0720/AppBurialPoint/blob/master/jpg/4.png)
 
+### 运行结果
+编译运行生成的apk文件，产生数据埋点文件如下：
+![image](https://github.com/YangJ0720/AppBurialPoint/blob/master/jpg/5.png)
+
+
 在kotlin中同样可以实现，不同的是在该目录下
-⁨Javassist⁩ ▸ ⁨app⁩ ▸ ⁨build⁩ ▸ ⁨tmp⁩ ▸ ⁨kotlin-classes⁩ ▸ ⁨debug⁩ ▸ ⁨com⁩ ▸ ⁨example⁩ ▸ ⁨javassist⁩
+⁨Javassist⁩ ▸ ⁨app⁩ ▸ ⁨build⁩ ▸ ⁨tmp⁩ ▸ ⁨kotlin-classes⁩ ▸ ⁨debug⁩ ▸ ⁨com⁩ ▸ ⁨example⁩ ▸ ⁨javassist⁩  
 生成的字节码文件并不能预览编译结果，但是实际埋点代码生效，难道是我打开方式不对？
 
