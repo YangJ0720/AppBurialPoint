@@ -28,7 +28,8 @@ open class DefaultLogcat : Logcat {
     private var mExternalCachePath: String
 
     constructor(context: Context) {
-        val sb = StringBuilder(context.cacheDir.absolutePath)
+        val cacheDir = context.externalCacheDir ?: context.cacheDir
+        val sb = StringBuilder(cacheDir.absolutePath)
         sb.append(File.separator)
         sb.append(getFileName())
         sb.append(FILE_FORMAT_TXT)

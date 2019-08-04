@@ -10,6 +10,8 @@ dependencies {
     compile gradleApi() // Gradle SDK
     compile localGroovy() // Groovy SDK
     compile 'com.android.tools.build:gradle:3.4.2' // 你的Gradle版本
+    //
+    compile 'org.javassist:javassist:3.20.0-GA'
 }
 
 group = 'com.example.plugin'
