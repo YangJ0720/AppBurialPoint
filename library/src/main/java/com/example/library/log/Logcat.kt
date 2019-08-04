@@ -1,6 +1,7 @@
 package com.example.library.log
 
 import android.app.Activity
+import android.app.Service
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -61,4 +62,8 @@ interface Logcat {
      * Activity生命周期埋点 -> onSaveInstanceState
      */
     fun holderActivityOnSaveInstanceState(activity: Activity?, outState: Bundle?)
+
+    fun holderServiceOnCreated(service: Service)
+
+    fun holderServiceOnDestroyed(service: Service)
 }

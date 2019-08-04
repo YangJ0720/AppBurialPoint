@@ -1,6 +1,7 @@
 package com.example.point.logcat;
 
 import android.app.Activity;
+import android.app.Service;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -70,5 +71,15 @@ public class SimpleLogcat implements Logcat {
     @Override
     public void holderActivityOnSaveInstanceState(@Nullable Activity activity, @Nullable Bundle outState) {
         Log.i(TAG, "holderActivityOnSaveInstanceState: " + activity);
+    }
+
+    @Override
+    public void holderServiceOnCreated(@NotNull Service service) {
+        Log.i(TAG, "holderServiceOnCreated: " + service);
+    }
+
+    @Override
+    public void holderServiceOnDestroyed(@NotNull Service service) {
+        Log.i(TAG, "holderServiceOnDestroyed: " + service);
     }
 }

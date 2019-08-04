@@ -19,11 +19,33 @@ class SimplePoint {
         // 获取点击事件Method
         CtMethod ctMethod = ctClass.getDeclaredMethods().find()
         println "addCode -> ctMethod = " + ctMethod
-        // 将埋点代码插入点击事件Method
+        // 将埋点代码插入该方法末尾
         ctMethod.insertAfter(content)
         // 将修改后的class文件保存到本地
         ctClass.writeFile(fileName)
         ctClass.detach()
+        //
+        println "埋点执行完成"
+    }
+
+    /**
+     * 添加埋点代码
+     * @param ctClass
+     * @param fileName
+     * @param hashMap
+     */
+    static void addCodeToService(CtClass ctClass, String fileName, HashMap<CtMethod, String> hashMap){
+        ctClass.defrost()
+        Iterator<Map.Entry<CtMethod, String>> iterator = hashMap.entrySet().iterator()
+        while (iterator.hasNext()) {
+            Map.Entry entry = iterator.next()
+            CtMethod ctMethod = entry.key
+            // 将埋点代码插入该方法末尾
+            ctMethod.insertAfter(entry.value)
+        }
+        // 将修改后的class文件保存到本地
+        ctClass.writeFile(fileName)
+        ctClass.defrost()
         //
         println "埋点执行完成"
     }
@@ -38,7 +60,7 @@ class SimplePoint {
     static void addCode(CtClass ctClass, CtMethod ctMethod, String fileName, String content) {
         ctClass.defrost()
         println "addCode -> ctMethod = " + ctMethod
-        // 将埋点代码插入点击事件Method
+        // 将埋点代码插入该方法末尾
         ctMethod.insertAfter(content)
         // 将修改后的class文件保存到本地
         ctClass.writeFile(fileName)
@@ -46,4 +68,5 @@ class SimplePoint {
         //
         println "埋点执行完成"
     }
+
 }

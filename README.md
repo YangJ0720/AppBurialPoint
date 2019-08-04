@@ -95,7 +95,7 @@ private void hasInterfaces(CtClass ctClass, String fileName) {
 ![image](https://github.com/YangJ0720/AppBurialPoint/blob/master/jpg/5.png)
 
 
-在kotlin中同样可以实现，不同的是在该目录下
-⁨Javassist⁩ ▸ ⁨app⁩ ▸ ⁨build⁩ ▸ ⁨tmp⁩ ▸ ⁨kotlin-classes⁩ ▸ ⁨debug⁩ ▸ ⁨com⁩ ▸ ⁨example⁩ ▸ ⁨javassist⁩  
+在kotlin中同样可以实现，不同的是在该目录下  
+⁨Javassist⁩ ▸ ⁨app⁩ ▸ ⁨build⁩ ▸ ⁨tmp⁩ ▸ ⁨kotlin-classes⁩ ▸ ⁨debug⁩ ▸ ⁨com⁩ ▸ ⁨example⁩ ▸ ⁨javassist⁩
 生成的字节码文件并不能预览编译结果，但是实际埋点代码生效，难道是我打开方式不对？
 

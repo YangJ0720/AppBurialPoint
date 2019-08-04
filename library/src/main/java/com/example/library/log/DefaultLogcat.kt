@@ -1,6 +1,7 @@
 package com.example.library.log
 
 import android.app.Activity
+import android.app.Service
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
@@ -83,6 +84,16 @@ open class DefaultLogcat : Logcat {
 
     override fun holderActivityOnSaveInstanceState(activity: Activity?, outState: Bundle?) {
         val text = getTemplateText("ActivityOnSaveInstanceState: $activity")
+        write(text)
+    }
+
+    override fun holderServiceOnCreated(service: Service) {
+        val text = getTemplateText("holderServiceOnCreated: $service")
+        write(text)
+    }
+
+    override fun holderServiceOnDestroyed(service: Service) {
+        val text = getTemplateText("holderServiceOnDestroyed: $service")
         write(text)
     }
 

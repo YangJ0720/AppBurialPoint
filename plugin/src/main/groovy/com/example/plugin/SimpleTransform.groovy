@@ -140,6 +140,8 @@ class SimpleTransform extends Transform {
         println "modify -> ctClass = " + ctClass
         // 判断当前class是否继承Activity
         hasActivity(ctClass, fileName)
+        //
+        hasService(ctClass, fileName)
         // 判断当前class是否实现接口
         hasInterfaces(ctClass, fileName)
     }
@@ -174,6 +176,41 @@ class SimpleTransform extends Transform {
             } catch (NotFoundException e) {
                 println ctClass.name + " : " + e.getMessage()
             }
+        }
+    }
+
+    /**
+     * 判断当前class是否继承Service
+     * @param ctClass
+     * @param fileName
+     */
+    private void hasService(CtClass ctClass, String fileName) {
+        CtClass superClass = ctClass.getSuperclass()
+        println "superClass = " + superClass
+        if (superClass.name == "android.app.Service") {
+            HashMap<CtMethod, String> hashMap = new HashMap<>(2)
+            // 对onCreate方法进行埋点
+            try {
+                CtMethod ctMethod = ctClass.getDeclaredMethod("onCreate")
+                println "ctMethod = " + ctMethod
+                // 拼装埋点代码
+                def content = "com.example.library.BurialPointManager.getInstance().getLogcat().holderServiceOnCreated(this);"
+                hashMap.put(ctMethod, content)
+            } catch (NotFoundException e) {
+                println ctClass.name + " : " + e.getMessage()
+            }
+            // 对onDestroy方法进行埋点
+            try {
+                CtMethod ctMethod = ctClass.getDeclaredMethod("onDestroy")
+                println "ctMethod = " + ctMethod
+                // 拼装埋点代码
+                def content = "com.example.library.BurialPointManager.getInstance().getLogcat().holderServiceOnDestroyed(this);"
+                hashMap.put(ctMethod, content)
+            } catch (NotFoundException e) {
+                println ctClass.name + " : " + e.getMessage()
+            }
+            //
+            addCodeToService(ctClass, fileName, hashMap)
         }
     }
 
@@ -215,6 +252,23 @@ class SimpleTransform extends Transform {
         SimplePoint.addCode(ctClass, fileName, content)
     }
 
+    /**
+     *
+     * @param ctClass
+     * @param fileName
+     * @param hashMap
+     */
+    private void addCodeToService(CtClass ctClass, String fileName, HashMap<CtMethod, String> hashMap) {
+        SimplePoint.addCodeToService(ctClass, fileName, hashMap)
+    }
+
+    /**
+     * 添加埋点代码
+     * @param ctClass
+     * @param ctMethod
+     * @param fileName
+     * @param content
+     */
     private void addCode(CtClass ctClass, CtMethod ctMethod, String fileName, String content) {
         SimplePoint.addCode(ctClass, ctMethod, fileName, content)
     }
